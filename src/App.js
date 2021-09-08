@@ -1,18 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
-import React, { useState, useEffect } from 'react'
-import list from './data.json'
+import useStorage from './hooks/storage';
 
 function App() {
 
-  const [index, setIndex] = useState(0)
-  const [students, setStudents] = useState(list)
+  const [data, index, next, previous] = useStorage();
 
   function showStudentList() {
     let result = '[ '
-    list.forEach((item, index) => {
+    data.forEach((item, index) => {
       result += item.name
-      if (index + 1 < list.length) {
+      if (index + 1 < data.length) {
         result += ', '
       }
     })
@@ -31,16 +28,12 @@ function App() {
       </div>
 
       <div>
-        <b>Name: </b> {students[index].name}
+        <b>Name: </b> {data[index].name}
       </div>
 
       <div>
-        {
-          index + 1 < students.length && <button onClick={() => setIndex(index + 1)}>Next</button>
-        }
-        {
-          index > 0 && <button onClick={() => setIndex(index - 1)}>Previous</button>
-        }
+          <button onClick={() => next()}>Next</button>
+          <button onClick={() => previous()}>Previous</button>
       </div>
 
     </div>
